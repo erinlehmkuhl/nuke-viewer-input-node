@@ -1,0 +1,59 @@
+set cut_paste_input [stack 0]
+version 13.0 v10
+push $cut_paste_input
+Group {
+name VIEWER_INPUT1
+selected true
+xpos -1105
+ypos -5768
+addUserKnob {20 ccc l "ccc file"}
+addUserKnob {41 channels T OCIOFileTransform2.channels}
+addUserKnob {41 file T OCIOFileTransform2.file}
+addUserKnob {41 reload T OCIOFileTransform2.reload}
+addUserKnob {41 cccid T OCIOFileTransform2.cccid}
+addUserKnob {41 select_cccid l "select cccid" T OCIOFileTransform2.select_cccid}
+addUserKnob {26 "" l " "}
+}
+Input {
+inputs 0
+name Input1
+xpos 400
+ypos -46
+}
+OCIOFileTransform {
+file "\[value ATLpath]_LUT_Package_v2/ACES2065_to_SLog3SGamut3.cineV.csp"
+version 2
+working_space scene_linear
+name OCIOFileTransform1
+label "Aces to slog"
+xpos 400
+}
+OCIOFileTransform {
+file "\[value ATLpath]\[value shotNumber]/\[value shotNumber]_\[value elem]/\[value shotNumber]_\[value elem].ccc"
+cccid "\[value shotNumber]_\[value elem]"
+working_space scene_linear
+name OCIOFileTransform2
+label .ccc
+xpos 402
+ypos 40
+}
+OCIOFileTransform {
+file "\[value ATLpath]_LUT_Package_v2/Atlas_Rec709.cube"
+working_space scene_linear
+name OCIOFileTransform3
+label Rec709
+xpos 398
+ypos 88
+}
+Grade {
+unpremult -rgba.alpha
+name Grade1
+xpos 400
+ypos 120
+}
+Output {
+name Output1
+xpos 400
+ypos 163
+}
+end_group
